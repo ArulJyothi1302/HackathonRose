@@ -1,0 +1,36 @@
+<div class="container mt-4">
+    <h1 class="text-center mb-4">Psychometric Test</h1>
+  
+    <!-- Progress bar -->
+    <div class="progress">
+      <div class="progress-bar bg-success" role="progressbar" [style.width.%]="calculateProgressPercentage()">
+        {{ calculateProgressPercentage() }}%
+      </div>
+    </div>
+  
+    <!-- Display only 5 questions based on the current page -->
+    <div class="card mb-4" *ngFor="let question of getCurrentPageQuestions()">
+      <div class="card-body">
+        <h5 class="card-title">{{ question.questionText }}</h5>
+        <div class="form-check" *ngFor="let option of question.options">
+          <input class="form-check-input" type="radio" name="{{ question.questionText }}" id="{{ option }}" value="{{ option }}" [(ngModel)]="question.selectedOption" (change)="selectOption(question, option)">
+          <label class="form-check-label" for="{{ option }}">
+            {{ option }}
+          </label>
+        </div>
+      </div>
+    </div>
+  
+    <!-- Pagination in the footer -->
+    <div class="d-flex justify-content-between">
+      <button class="btn btn-outline-primary" (click)="prevPage()" [disabled]="currentPage === 1">Previous</button>
+      <div>
+        Page {{ currentPage }} of 4
+      </div>
+      <button class="btn btn-primary" (click)="nextPage()" [disabled]="currentPage === 4">Next</button>
+    </div>
+  </div>
+  
+  <!-- PrimeNG Toast for displaying growl messages -->
+  <p-toast position="top-right"></p-toast>
+  
